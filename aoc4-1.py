@@ -1,0 +1,78 @@
+grid = '''..@@.@@@@.
+@@@.@.@.@@
+@@@@@.@.@@
+@.@@@@..@.
+@@.@@@@.@@
+.@@@@@@@.@
+.@.@.@.@@@
+@.@@@.@@@@
+.@@@@@@@@.
+@.@.@@@.@.'''
+
+grid = grid.split('\n')
+
+with open('input4.txt', 'r') as file:
+    grid = file.readlines()
+
+for i in range(0, len(grid)):
+    grid[i].replace('\n','')
+
+print(grid)
+
+def removedot(alist):
+    while '.' in alist:
+        alist.remove('.')
+    return alist
+
+def getsurrounding(grid, r, c):
+    newlist = [ grid[r-1][c-1], grid[r-1][c], grid[r-1][c+1], \
+    grid[r][c-1], grid[r][c+1], \
+    grid[r+1][c-1], grid[r+1][c], grid[r+1][c+1] ]
+    return removedot(newlist)
+
+def getlside(grid, r, c):
+    newlist = [grid[r-1][c], grid[r-1][c+1], grid[r][c+1], grid[r+1][c], grid[r+1][c+1]]
+    return removedot(newlist)
+
+def getrside(grid, r, c):
+    newlist = [grid[r-1][c-1], grid[r-1][c], grid[r][c-1], grid[r+1][c-1], grid[r+1][c]]
+    return removedot(newlist)
+
+def gettopside(grid, r, c):
+    newlist = [grid[r][c-1], grid[r][c+1], grid[r+1][c-1], grid[r+1][c], grid[r+1][c+1]]
+    return removedot(newlist)
+
+def getbotside(grid, r, c):
+    newlist = [ grid[r-1][c-1], grid[r-1][c], grid[r-1][c+1], grid[r][c-1], grid[r][c+1]]
+    return removedot(newlist)
+
+
+count = 0
+
+for row in range(0, len(grid)):
+    for col in range(0, len(grid[row])):
+        if grid[row][col] == '.':
+            continue
+        if row == 0 or row == len(grid)-1:
+            if col == 0 or col == len(grid[row])-1:
+                count += 1
+                #print(row, col, count, 'hello')
+                continue
+        
+        if row == 0:
+            rolls = gettopside(grid, row, col)
+        elif row == len(grid)-1:
+            rolls = getbotside(grid, row, col)
+        elif col == 0:
+            rolls = getlside(grid, row, col)
+        elif col == len(grid[row]) - 1:
+            rolls = getrside(grid, row, col)
+        else:
+            rolls = getsurrounding(grid, row, col)
+        if len(rolls) < 4:
+            count += 1
+            #print(row, col, count)
+
+print(count)
+            
+        
