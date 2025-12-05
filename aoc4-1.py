@@ -1,23 +1,24 @@
-grid = '''..@@.@@@@.
-@@@.@.@.@@
-@@@@@.@.@@
-@.@@@@..@.
-@@.@@@@.@@
-.@@@@@@@.@
-.@.@.@.@@@
-@.@@@.@@@@
-.@@@@@@@@.
-@.@.@@@.@.'''
+# grid = '''..@@.@@@@.
+# @@@.@.@.@@
+# @@@@@.@.@@
+# @.@@@@..@.
+# @@.@@@@.@@
+# .@@@@@@@.@
+# .@.@.@.@@@
+# @.@@@.@@@@
+# .@@@@@@@@.
+# @.@.@@@.@.'''
 
-grid = grid.split('\n')
+# grid = grid.split('\n')
 
 with open('input4.txt', 'r') as file:
     grid = file.readlines()
 
 for i in range(0, len(grid)):
-    grid[i].replace('\n','')
-
-print(grid)
+    strlength = len(grid[i])
+    if i == len(grid)-1:
+        continue
+    grid[i] = grid[i][0:strlength-1]    
 
 def removedot(alist):
     while '.' in alist:
